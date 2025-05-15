@@ -1,0 +1,860 @@
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Close mobile menu if open
+                    const navLinks = document.querySelector('.nav-links');
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Animation for sections
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karishma Grace - Business Analyst Portfolio</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #334e68;
+            --accent: #047857;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: var(--light);
+        }
+        
+        header {
+            position: relative;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        #myVideo {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            z-index: -1;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .header-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+        
+        .header-btn:hover {
+            background-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--gray);
+        }
+        
+        .contact-info {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        section {
+            padding: 6rem 0 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        #about {
+            margin-top: 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .about-content {
+                grid-template-columns: 3fr 2fr;
+            }
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .project-card, .experience-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover, .experience-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .projects-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .projects-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .project-title {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-desc {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .project-tool {
+            background-color: #e2e8f0;
+            color: var(--secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent);
+        }
+        
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% - 12px);
+            background-color: #cbd5e1;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-company {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .timeline-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .timeline-title {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .timeline-desc {
+            margin-bottom: 0.5rem;
+        }
+        
+        .education-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-contact a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark);
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #036c4e;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .skills-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .skill-category {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .skill-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .skill-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container container">
+            <a href="#" class="logo">KG</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="video-background">
+            <video autoplay muted loop id="myVideo">
+                <source src="/api/placeholder/1920/1080" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-img">KG</div>
+                <div>
+                    <h1>Karishma Grace</h1>
+                    <p>Aspiring Business Analyst | Data Enthusiast</p>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Overland Park, KS</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>+1-913-263-4357</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <span>karishmagrace8@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🔗</span>
+                        <span>linkedin.com/in/karishma-grace-4635801b0</span>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <a href="#about" class="header-btn">About Me</a>
+                    <a href="#projects" class="header-btn">Projects</a>
+                    <a href="#experience" class="header-btn">Experience</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div>
+                    <p>I am a motivated Junior Business Analyst with a Master's in Computer Science and internship experience supporting business process analysis, requirement gathering, and reporting. I am skilled in Excel, Power BI, SQL, and stakeholder communication with a passion for data-driven decision making and business improvement.</p>
+                    <p>Currently pursuing my Master's degree at the University of Central Missouri, I am eager to apply my analytical skills and technical knowledge to help organizations improve their processes and make data-driven decisions.</p>
+                    <a href="#contact" class="btn">Get In Touch</a>
+                </div>
+                <div>
+                    <h3>Key Qualifications</h3>
+                    <ul>
+                        <li>Data analysis and visualization using Excel and Power BI</li>
+                        <li>Business requirements gathering and documentation</li>
+                        <li>SQL database querying and management</li>
+                        <li>Process improvement and optimization</li>
+                        <li>Stakeholder communication and reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Skills & Expertise</h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Technical Skills</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Excel</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Power BI</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>SQL</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Orange Tool</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Jupyter Notebook</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Business Skills</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Requirements Gathering</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Data Analysis</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Documentation</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Process Improvement</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                <span>Stakeholder Communication</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2>Work Experience</h2>
+            </div>
+            <div class="experience-card">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-company">New Tech Solutions</span>
+                        <span class="timeline-date">Jan 2022 - June 2022</span>
+                    </div>
+                    <div class="timeline-title">Junior Business Analyst Intern</div>
+                    <div class="timeline-desc">
+                        <ul>
+                            <li>Collaborated with product and sales teams to gather business requirements.</li>
+                            <li>Analyzed customer data and created summary reports using Excel.</li>
+                            <li>Improved process efficiency by documenting workflows and reporting tools.</li>
+                            <li>Participated in stakeholder meetings and provided analytical support.</li>
+                            <li>Assisted in identifying business needs and translating them into technical requirements.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Projects</h2>
+            </div>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h3 class="project-title">Global Bike Sales Dashboard</h3>
+                    <p class="project-desc">Created a dynamic Excel dashboard with slicers and pivot charts to monitor sales KPIs and trends. The dashboard provided insights into regional performance, product categories, and customer demographics.</p>
+                    <div class="project-tools">
+                        <span class="project-tool">Excel</span>
+                        <span class="project-tool">Pivot Tables</span>
+                        <span class="project-tool">Data Visualization</span>
+                        <span class="project-tool">KPI Monitoring</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3 class="project-title">FoodMart Association Rule Mining</h3>
+                    <p class="project-desc">Applied market basket analysis using Orange tool to find frequent itemsets and optimize product placement. Discovered key purchase patterns and made recommendations to improve store layout and promotions.</p>
+                    <div class="project-tools">
+                        <span class="project-tool">Orange</span>
+                        <span class="project-tool">Data Mining</span>
+                        <span class="project-tool">Association Rules</span>
+                        <span class="project-tool">Market Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <div class="section-title">
+                <h2>Education</h2>
+            </div>
+            <div class="timeline">
+                <div class="education-card">
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="timeline-company">University of Central Missouri</span>
+                            <span class="timeline-date">Expected May 2025</span>
+                        </div>
+                        <div class="timeline-title">Master of Science in Computer Science</div>
+                        <div class="timeline-desc">
+                            <p>GPA: 3.25</p>
+                            <p>Relevant Coursework: Database Systems, Data Mining, Business Intelligence, Advanced Excel, Project Management</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="education-card">
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="timeline-company">Usha Rama College of Engineering & Technology</span>
+                            <span class="timeline-date">2023</span>
+                        </div>
+                        <div class="timeline-title">Bachelor of Technology in Information Technology</div>
+                        <div class="timeline-desc">
+                            <p>GPA: 3.3</p>
+                            <p>Relevant Coursework: Programming Fundamentals, Database Management, Statistics, Information Systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-card" style="text-align: center;">
+                <p>I'm currently looking for Business Analyst opportunities. Feel free to reach out if you'd like to connect!</p>
+                <div style="margin: 2rem 0; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div class="contact-method">
+                        <h3>Email</h3>
+                        <p>karishmagrace8@gmail.com</p>
+                    </div>
+                    <div class="contact-method">
+                        <h3>Phone</h3>
+                        <p>+1-913-263-4357</p>
+                    </div>
+                    <div class="contact-method">
+                        <h3>LinkedIn</h3>
+                        <p>linkedin.com/in/karishma-grace-4635801b0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Karishma Grace. All rights reserved.</p>
+            <div class="footer-contact">
+                <a href="mailto:karishmagrace8@gmail.com">Email</a>
+                <a href="https://linkedin.com/in/karishma-grace-4635801b0" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
